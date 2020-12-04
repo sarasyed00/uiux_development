@@ -68,3 +68,20 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### Application Architecture:
+**Component & Data Organization:**
+
+This application has a very simple design structure. The App.js file contains RecipeList, a list of all the recipe items and their information. This information is passed into a FilterList component (from FilterList.js).
+FilterList.js includes the methods for filtering and sorting the RecipeList. FilterList.js instantiates a NavBar component (from NavBar.js), which displays the react-bootstrap navigation bars. The recipe items themselves are laid out in the DisplayItem component (from DisplayItem.js) and displayed in the DisplayList component (from DisplayList.js). Filter.js instantiates this DisplayList component. Filter.js also includes the methods for aggregating items in the DisplayMenu component, which it instantiates from DisplayMenu.js. When users add items to the menu, the list of added items is passed to DisplayMenu component. 
+
+**User Interactions and States:**
+
+Updates caused by user interactions (using the filtering or sorting methods OR adding/removing recipes from menu) are kept track of in states. 
+
+The "add to menu" button is a React button component in DisplayItem. When the user presses the button, it triggers an update of its own state (onOff), which keeps track of whether the item is pressed (added to menu) or not pressed (not on menu). It also triggers the calling of a parent method (removeTime or addTime), which updates the aggregate cook times of menu items in the FilteredList component. The FilteredList component keeps track of the menu cook time in a state called totaltime. 
+
+The navigation bars (both filtering and sorting) are react-bootstrap NavBar components in NavBar.js. When pressed, they call parent functions from FilteredList. FilteredList then handles the appropriate sorting/filtering of the RecipeList. It does so by changing its states to match what was selected in the navigation bar. For this functionality, FilteredList has states: 
+1) type-- which corresponds to "Breakfast", "Dinner", "Dessert", or "Any"
+2) difficultlevel-- which corresponds to "Easy", "Medium", "Hard", or "Any"
+3) sort-- which corresponds to "None", "Asc" (Low to High), "Dsc" (High to Low)
