@@ -14,33 +14,39 @@ export default class FilteredList extends Component {
         super(props);
         this.productList= this.props.list
         this.state = {
+		{/*state to keep track of which difficulty level was selected in navbar*/}
             difficultlevel: "Any",
+		{/*state to keep track of which type was selected in navbar*/}
             type: "Any",
+		{/*state to keep track of if sorting method was selected in navbar*/}
             sort: "None",
+		{/*state to keep track of aggregate cook times for recipes added to menu*/}
             totaltime: 0,
+		{/*state to keep track of which recipes were added to menu*/}
             menuitems: [],
         };
     }
 
-
+	{/*method to change state when difficilty navbar is changed*/}
     onSelectFilterLevel = event => {
         this.setState({
             difficultlevel: event
         })
     };
-
+	{/*method to change state when type navbar is changed*/}
     onSelectFilterType = event => {
         this.setState({
             type: event
         })
     };
-
+	{/*method to change state when sort navbar is changed*/}
     onSelectSort = event => {
         this.setState({
             sort: event
         })
     }
 
+    {/*method to filter by navbar selection*/}
     matchesFilterLevel = item => {
 	{/* all items should be shown when no filter is selected*/}
     	if(this.state.difficultlevel === 'Any') {
@@ -52,6 +58,7 @@ export default class FilteredList extends Component {
     	}
     };
 
+	{/*method to filter by navbar selection*/}
     matchesFilterType = item => {
 	{/* all items should be shown when no filter is selected*/}
     	if(this.state.type === 'Any') {
@@ -63,6 +70,7 @@ export default class FilteredList extends Component {
     	}
     };
 
+	{/*method to allow both navbar filtering to work together*/}
     checkBoth = item => {
         if(this.matchesFilterType(item) === true){
             if(this.matchesFilterLevel(item) ===true){
@@ -77,6 +85,7 @@ export default class FilteredList extends Component {
         }
     }
 
+    {/*method for navbar sorting functionality*/}
     sortAll = list => {
         if (this.state.sort === 'None'){
             return this.props.list.filter(this.checkBoth)
@@ -90,12 +99,14 @@ export default class FilteredList extends Component {
 
     }
 
+    {/*method to aggregate times of recipes in menu*/}
     addTime = item => {
         this.setState({totaltime: this.state.totaltime +item.cooktime})
         const newitems = [...this.state.menuitems, item.name];
         this.setState({menuitems: newitems });
     }
 
+    {/*method to decrease aggegate times when recipe is removed from menu*/}
     removeTime = item => {
         this.setState({totaltime: this.state.totaltime - item.cooktime})
         const newitems = this.state.menuitems.filter(x => x != item.name);
