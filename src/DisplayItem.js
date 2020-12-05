@@ -4,16 +4,19 @@ import {Button} from "@material-ui/core";
 import 'semantic-ui-css/semantic.min.css';
 import { Icon } from 'semantic-ui-react'
 
+//component that lays out recipe items
 export default class DisplayItem extends Component {
     constructor(props){
         super(props);
 
         this.state = {
+            //state to keep track of button pressed
             onOff: "Add to Menu"
         }
         this.handleClick = this.handleClick.bind(this)
     }
 
+    //method that is called when button is clicked
     handleClick = () => {
 
         if (this.state.onOff === "Add to Menu"){
