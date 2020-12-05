@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Image from 'react-bootstrap/Image'
 import DisplayItem from './DisplayItem.js'
 
-
+//Component that displays recipe items in a flexbox layout
 export default class DisplayList extends Component {
     constructor(props){
         super(props);
